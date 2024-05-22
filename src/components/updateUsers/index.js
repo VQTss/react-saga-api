@@ -6,26 +6,22 @@ import { Checkbox, Form, Input } from 'antd';
 
 
 const UpdateUsers = (props) => {
-    const [isModalOpen, setIsModalOpen] = useState(0);
-    const { state, updatedUsers, handleStateChange, record } = props;
     
-
-    const [isDataUpdated, setIsDataUpdated] = useState({
-        users: {}
-    });
+    const { state, updatedUsers, record , handleStateChange, isModalUpdateOpen, setIsModalUpdateOpen } = props;
+    
 
     console.log("record updtae new", record)
 
     const showModal = () => {
-        setIsModalOpen(true);
+        setIsModalUpdateOpen(true);
     };
 
     const handleOk = () => {
-        setIsModalOpen(false);
+        setIsModalUpdateOpen(false);
     };
 
     const handleCancel = () => {
-        setIsModalOpen(false);
+        setIsModalUpdateOpen(false);
     };
     const onFinish = (values) => {
         console.log('Success:', values);
@@ -38,7 +34,7 @@ const UpdateUsers = (props) => {
             <Button type="primary" onClick={showModal}>
                     Update
                 </Button>
-                <Modal title="Update users" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <Modal title="Update users" open={isModalUpdateOpen} onOk={handleOk} onCancel={handleCancel}>
                     <Form
                         name="basic"
                         labelCol={{
@@ -72,8 +68,11 @@ const UpdateUsers = (props) => {
                         >
                             <Input 
                                 disabled={true}
-                            
-                            />
+                                onChange={(e) => handleStateChange( {
+                                    ...record,
+                                    username: e.target.value
+                                })}
+                                />
                         </Form.Item>
 
                         <Form.Item
@@ -87,9 +86,10 @@ const UpdateUsers = (props) => {
                             ]}
                         >
                             <Input.Password 
-                            
-                            value={record.password}
-                            
+                            onChange={(e) => handleStateChange( {
+                                ...record,
+                                password: e.target.value
+                            })} 
                             />
                         </Form.Item>
 
@@ -109,8 +109,10 @@ const UpdateUsers = (props) => {
                             ]}
                         >
                             <Input 
-                              value={record.email}
-                              
+                            onChange={(e) => handleStateChange( {
+                                ...record,
+                                email: e.target.value
+                            })}
                             />
                         </Form.Item>
                         <Form.Item

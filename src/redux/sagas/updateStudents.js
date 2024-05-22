@@ -3,14 +3,14 @@ import * as actionTypes from '../actions/actionTypes'
 import apiStudent from '../../servers/api'
 
 export default function* addUsersSaga() {
-    yield takeEvery(actionTypes.UPDATE_USER, addUsers);
+    yield takeEvery(actionTypes.UPDATE_USER, updatedUsers);
 }
 
-function* addUsers (action) {
-    console.log("addUsers", action);
+function* updatedUsers (action) {
+    console.log("updatedUsers", action);
     try {
-        const addUsers = yield call(apiStudent.addUsers, action.payload);
-        yield put({ type: actionTypes.UPDATED_USER_SUCCESS, payload: addUsers })
+        const upUsers = yield call(apiStudent.updateUsers, action.payload);
+        yield put({ type: actionTypes.UPDATED_USER_SUCCESS, payload: upUsers })
     } catch (error) {
         console.log(error);
     }

@@ -17,8 +17,13 @@ const UsersPage = (props) => {
         email: ''
     });
 
+    const [isDataUpdated, setIsDataUpdated] = useState({
+        users: {}
+    });
 
-    
+    const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(0);
+
+
 
     useEffect(() => {
         actions.getUsers();
@@ -58,7 +63,10 @@ const UsersPage = (props) => {
                     </Button> */}
                     <UpdateUsers 
                         record={record}
-                        updatedUsers={updatedUsers}
+                        updatedUsers={handleUpdateUser}
+                        handleStateChange={setIsDataUpdated}
+                        isModalUpdateOpen={isModalUpdateOpen}
+                        setIsModalUpdateOpen={setIsModalUpdateOpen}
                     />
 
                 </>
@@ -74,6 +82,21 @@ const UsersPage = (props) => {
             )
         }
     ];
+
+  
+
+
+    const handleUpdateUser = () => {
+        const users = {
+            username: isDataUpdated.username,
+            email: isDataUpdated.email,
+            password:  isDataUpdated.password,
+        }
+        console.log("Submit update user", users);
+        actions.updateUsers(users);
+        setIsModalUpdateOpen(false)
+       
+    }
 
     const handleAddUsers = () => {
         const users = {
