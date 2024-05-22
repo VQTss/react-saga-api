@@ -3,41 +3,29 @@ import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import * as actionTypes from '../redux/actions';
 import AddUsers from '../components/addUsers';
-import { Button} from 'antd';
+import { Button, Modal } from 'antd';
 import UpdateUsers from '../components/updateUsers';
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Form, Input, Select, Space } from 'antd';
 const UsersPage = (props) => {
-   
-    const { users,addedUsers, updatedUsers, deletedUsers ,actions } = props;
+    const form = Form.useForm()
+    
+    const { users, addedUsers, updatedUsers, deletedUsers, actions } = props;
     const [state, setSate] = useState({
-       usernames: '',
-       password: '',
-       email: ''
+        usernames: '',
+        password: '',
+        email: ''
     });
 
 
-    const [isModalOpen, setIsModalOpen] = useState(0);
+    
 
-
-    const showModal = () => {
-        setIsModalOpen(true);
-
-    };
-
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
-
- 
     useEffect(() => {
         actions.getUsers();
     }, []);
 
     useEffect(() => {
-        if (addedUsers  || updatedUsers || deletedUsers) { 
+        if (addedUsers || updatedUsers || deletedUsers) {
             actions.getUsers();
         }
     }, [addedUsers, updatedUsers, deletedUsers])
@@ -62,22 +50,27 @@ const UsersPage = (props) => {
         {
             title: 'Update',
             key: 'key',
-            dataIndex: 'key',
             render: (text, record) => (
-            
-             <UpdateUsers/>
 
-            
+                <>
+                    {/* <Button type="primary" onClick={() => showModal(record)}>
+                        Update
+                    </Button> */}
+                    <UpdateUsers 
+                        record={record}
+                        updatedUsers={updatedUsers}
+                    />
+
+                </>
             )
         },
         {
             title: 'Delete',
             key: 'key',
-            dataIndex: 'key',
             render: (text, record) => (
-             <Button 
-             onClick={()=> handleDeleteUser(record)}
-             >{"Delete"}</Button>
+                <Button
+                    onClick={() => handleDeleteUser(record)}
+                >{"Delete"}</Button>
             )
         }
     ];
@@ -86,7 +79,7 @@ const UsersPage = (props) => {
         const users = {
             username: state.usernames,
             email: state.email,
-            password:  state.password,
+            password: state.password,
         }
         actions.addUsers(users);
         cleanState()
@@ -103,7 +96,7 @@ const UsersPage = (props) => {
         const user = {
             username: data.username,
             email: data.email,
-            password:  data.password,
+            password: data.password,
         }
         actions.deleteUsers(user);
         cleanState()
@@ -112,17 +105,18 @@ const UsersPage = (props) => {
     return (
 
         <div>
-           
-            <AddUsers
+            <AddUsers 
+                tyle={{ margin: 100 }}
                 state={state}
                 handleStateChange={setSate}
                 handleAddUsers={handleAddUsers}
             />
-           
-            <Table style={{margin: 100}} dataSource={users} columns={columns} />
+            <Table style={{ margin: 100 }} dataSource={users} columns={columns} />
+
         </div>
     )
 }
+
 
 
 

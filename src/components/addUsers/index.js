@@ -29,9 +29,9 @@ const AddUsers = (props) => {
     return (
         <div >
             <Button type="primary" onClick={showModal}>
-                    Open Modal
+                    Add Users
                 </Button>
-                <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <Modal title="Add users" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                     <Form
                         name="basic"
                         labelCol={{

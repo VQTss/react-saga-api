@@ -4,10 +4,18 @@ import React, { useState } from 'react';
 import { Button, Modal } from 'antd';
 import { Checkbox, Form, Input } from 'antd';
 
+
 const UpdateUsers = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(0);
-    const { openUpdate, handleUpdateUsers, handleStateChange } = props;
+    const { state, updatedUsers, handleStateChange, record } = props;
     
+
+    const [isDataUpdated, setIsDataUpdated] = useState({
+        users: {}
+    });
+
+    console.log("record updtae new", record)
+
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -30,7 +38,7 @@ const UpdateUsers = (props) => {
             <Button type="primary" onClick={showModal}>
                     Update
                 </Button>
-                <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <Modal title="Update users" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                     <Form
                         name="basic"
                         labelCol={{
@@ -44,15 +52,17 @@ const UpdateUsers = (props) => {
                         }}
                         initialValues={{
                             remember: true,
+                            usernameUpdate: record.username,
+                            passwordUpdate: record.password,
+                            emailUpdate: record.email,
                         }}
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
-                        autoComplete="off"
+                        autoComplete="on"
                     >
                         <Form.Item
                             label="Username"
-                            name="username"
-                            
+                            name="usernameUpdate"
                             rules={[
                                 {
                                     required: true,
@@ -61,17 +71,14 @@ const UpdateUsers = (props) => {
                             ]}
                         >
                             <Input 
-                            value={openUpdate.users.usernames}
-                            onChange={(e) => handleStateChange({
-                                
-                                usernames: e.target.value
-                            })} 
+                                disabled={true}
+                            
                             />
                         </Form.Item>
 
                         <Form.Item
                             label="Password"
-                            name="password"
+                            name="passwordUpdate"
                             rules={[
                                 {
                                     required: true,
@@ -81,17 +88,15 @@ const UpdateUsers = (props) => {
                         >
                             <Input.Password 
                             
-                            value={openUpdate.users.password}
-                            onChange={(e) => handleStateChange({
-                                password: e.target.value
-                            })} 
+                            value={record.password}
+                            
                             />
                         </Form.Item>
 
                        
                         <Form.Item
                             label="Email"
-                            name="email"
+                            name="emailUpdate"
                             rules={[
                                 {
                                     required: true,
@@ -104,11 +109,8 @@ const UpdateUsers = (props) => {
                             ]}
                         >
                             <Input 
-                              value={openUpdate.users.email}
-                              onChange={(e) => handleStateChange({
-                                
-                                  email: e.target.value
-                              })} 
+                              value={record.email}
+                              
                             />
                         </Form.Item>
                         <Form.Item
@@ -118,7 +120,7 @@ const UpdateUsers = (props) => {
                             }}
                         >
                             <Button type="primary" htmlType="submit"
-                                onClick={handleUpdateUsers}
+                                onClick={updatedUsers}
                             >
                                 Submit
                             </Button>
