@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import createSagaMiddleware from "redux-saga";
 import rootReducer from "./reducers/index";
 
-import { getUsers , addUsers, deleteUsers , updateUsers} from "./sagas/index";
+import { getUsers , addUsers, deleteUsers , updateUsers , loginUsers} from "./sagas/index";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -21,3 +21,4 @@ sagaMiddleware.run(getUsers);
 sagaMiddleware.run(addUsers);
 sagaMiddleware.run(deleteUsers);
 sagaMiddleware.run(updateUsers);
+sagaMiddleware.run(loginUsers);

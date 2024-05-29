@@ -1,4 +1,4 @@
-import {GET_ALL_USERS, ADD_USER, DELETE_USER , UPDATE_USER} from './actionTypes'
+import {GET_ALL_USERS, ADD_USER, DELETE_USER , UPDATE_USER, LOGIN_USER} from './actionTypes'
 
 export const getUsers = () => {
     return {
@@ -21,5 +21,11 @@ export const deleteUsers = (data) => {
 export const updateUsers = (data) => {
     return {
         type: UPDATE_USER, payload: data
+    };
+}
+
+export const loginUser = (data) => {
+    return {
+        type: LOGIN_USER, payload: data
     };
 }
