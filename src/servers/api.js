@@ -1,3 +1,4 @@
+
 const URL = 'http://127.0.0.1:3333/'
 
 
@@ -48,6 +49,20 @@ export default {
            .catch(error => console.error(error));
 
         return newUsers;
-    }
+    },
+    loginUser: async function (data){
+        console.log("call loginUser")
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        };
+        const newUsers =  await fetch(URL + 'login', options).then(response => response.json())
+           .then(data => data)
+           .catch(error => console.error(error));
 
+        return newUsers;
+    }
 }

@@ -9,12 +9,15 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Form, Input, Select, Space } from 'antd';
 const UsersPage = (props) => {
     const form = Form.useForm()
-    
+    var nameLocal = localStorage.getItem('name')
+
+    console.log("nameLocal", nameLocal)
     const { users, addedUsers, updatedUsers, deletedUsers, actions } = props;
     const [state, setSate] = useState({
         usernames: '',
         password: '',
-        email: ''
+        email: '',
+        role: 'users',
     });
 
     const [isDataUpdated, setIsDataUpdated] = useState({
@@ -23,7 +26,14 @@ const UsersPage = (props) => {
 
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(0);
 
+    const checkPermission = () => {
+        if (nameLocal == 'admin') {
+         return true
+        }
+        console.log('check permistion false')
+        return false
 
+    }
 
     useEffect(() => {
         actions.getUsers();
@@ -76,7 +86,7 @@ const UsersPage = (props) => {
             title: 'Delete',
             key: 'key',
             render: (text, record) => (
-                <Button
+                <Button className='btnUpdate' disabled={nameLocal === 'admin' ? false : true}
                     onClick={() => handleDeleteUser(record)}
                 >{"Delete"}</Button>
             )

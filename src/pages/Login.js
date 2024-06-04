@@ -1,13 +1,38 @@
 
 import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
-const onFinish = (values) => {
-  console.log('Success:', values);
+import * as actionTypes from '../redux/actions';
+import { connect } from "react-redux";
+import { useEffect, useState } from 'react';
+import apiStudent from '../servers/api'
+import { redirect } from 'react-router-dom';
+
+
+const onFinish = async (values) => {
+  console.log('====Login====');
+  const login = await apiStudent.loginUser(values);
+
+  if (login.status == 200) {
+    console.log("check",login);
+    localStorage.setItem('name', login.users.role);
+    window.location.href = "http://localhost:3000/app";
+  }else{
+    alert('Login failed == account not found');
+  }
+  
+  
 };
 const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo);
 };
+
+
+
 const LoginPage = ()=> {
+
+
+    
+
     return (
         <Form
         name="basic"
@@ -70,12 +95,18 @@ const LoginPage = ()=> {
             span: 16,
           }}
         >
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit"
+            
+          >
+            
             Submit
           </Button>
         </Form.Item>
       </Form>
     )
 }
+
+
+
 
 export default LoginPage;

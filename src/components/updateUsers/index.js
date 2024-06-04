@@ -8,7 +8,7 @@ import { Checkbox, Form, Input } from 'antd';
 const UpdateUsers = (props) => {
     
     const { state, updatedUsers, record , handleStateChange, isModalUpdateOpen, setIsModalUpdateOpen } = props;
-    
+    var nameLocal = localStorage.getItem('name')
 
     console.log("record updtae new", record)
 
@@ -31,7 +31,7 @@ const UpdateUsers = (props) => {
     };
     return (
         <div >
-            <Button type="primary" onClick={showModal}>
+            <Button type="primary" onClick={showModal} disabled={nameLocal === 'admin' ? false : true}>
                     Update
                 </Button>
                 <Modal title="Update users" open={isModalUpdateOpen} onOk={handleOk} onCancel={handleCancel}>

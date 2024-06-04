@@ -9,7 +9,7 @@ export default function* loginUsersSaga() {
 function* loginUsers (action) {
     console.log("login users", action);
     try {
-        const loginUsers = yield call(apiStudent.updateUsers, action.payload);
+        const loginUsers = yield call(apiStudent.loginUser, action.payload);
         yield put({ type: actionTypes.LOGIN_USER_SUCCESS, payload: loginUsers })
     } catch (error) {
         console.log(error);
